@@ -1,0 +1,40 @@
+def simpsons(f,a,b):
+    return (b-a)/6 * (f(a) + 4*f((a+b)/2) + f(b))
+
+def multistep(f,method,a,b,N):
+    '''integrate function f using method between a and b in N intervals'''
+    # logic to split the domain into intervals
+    step = (b-a)/N
+    lower = sp.linspace(a,b,N,endpoint=False)
+    upper = sp.linspace(a+step,b,N)
+    # apply method to integrate over every interval
+    # sum the result cumulatively
+    result = 0
+    for n in range(N):
+        result += method(f,lower[n],upper[n])
+    return result    
+
+
+
+
+
+
+for i in range(50):
+    xdata.append(data[i][0])
+    ydata.append(data[i][1])
+
+def trial_function(x, a, b):
+    return sp.exp((-b * x) - a)
+
+
+def error_squared(data, func, *args):
+    domain = sp.arange(len(data))
+    return sp.sum((data - func(domain, *args)) ** 2)
+
+domain = sp.arange(len(ydata))
+print("Domain = ", domain)
+a, b = sp.optimize.fmin(lambda args: error_squared(ydata, trial_function, *args), x0=[1, 1])
+
+plt.plot(trial_function(domain, a, b), label = "Fitted trial function")
+plt.legend()
+plt.show()
