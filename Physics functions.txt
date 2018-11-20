@@ -14,9 +14,11 @@ def multistep(f,method,a,b,N):
         result += method(f,lower[n],upper[n])
     return result    
 
+def mid(f,a,b):
+    return (b-a)*f((a+b)/2)
 
-
-
+def trap(f,a,b):
+    return 0.5 * (b-a)*(f(a) + f(b))
 
 
 for i in range(50):
